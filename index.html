@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>스타트업 채용 박람회 | Job Directory</title>
+
+  <!-- ============================================================
+       [CSS 스타일]
+       ============================================================ -->
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Pretendard', 'Noto Sans KR', -apple-system, sans-serif;
+      background: #f7f7fb;
+      color: #1a1a2e;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ----- 상단 헤더 ----- */
+    header {
+      background: linear-gradient(135deg, #6a11cb 0%, #8e2de2 50%, #a855f7 100%);
+      color: #fff;
+      padding: 60px 24px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: "";
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+      background-size: 30px 30px;
+      pointer-events: none;
+    }
+    header h1 {
+      font-size: 2.4rem; font-weight: 800;
+      letter-spacing: -1px; margin-bottom: 8px;
+      position: relative;
+    }
+    header p { font-size: 1.05rem; opacity: 0.9; position: relative; }
+
+    /* ----- 검색+정렬 바 ----- */
+    .control-bar {
+      max-width: 1000px;
+      margin: -32px auto 0;
+      padding: 0 16px;
+      display: flex;
+      gap: 10px;
+      position: relative;
+      z-index: 10;
+      align-items: center;
+      flex-wrap: nowrap;              /* 같은 줄에 유지 */
+    }
+    .control-bar input {
+      flex: 1 1 auto;                 /* 남는 공간만큼만 늘어남 */
+      min-width: 0;                   /* 과도한 확장 방지 (핵심!) */
+      padding: 16px 22px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 999px;
+      box-shadow: 0 10px 40px rgba(106, 17, 203, 0.25);
+      outline: none;
+      transition: box-shadow .2s;
+    }
+    .control-bar select {
+      flex: 0 0 auto;                 /* 고정 크기 유지 */
+      padding: 16px 18px;
+      font-size: 0.95rem;
+      border: none;
+      border-radius: 999px;
+      background: #fff;
+      cursor: pointer;
+      box-shadow: 0 10px 40px rgba(106, 17, 203, 0.25);
+      font-family: inherit;
+      font-weight: 500;
+      color: #1a1a2e;
+      outline: none;
+      max-width: 40%;                 /* 화면 좁을 때 select도 너무 커지지 않게 */
+    }
+
+    /* ----- 필터 칩 영역 ----- */
+    .chip-wrap {
+      max-width: 1200px;
+      margin: 28px auto 0;
+      padding: 0 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1.5px solid #e5e0f0;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #555;
+      cursor: pointer;
+      transition: all .2s ease;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .chip:hover {
+      border-color: #a855f7;
+      color: #6a11cb;
+    }
+    .chip.active {
+      background: linear-gradient(135deg, #6a11cb, #a855f7);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 4px 16px rgba(106, 17, 203, 0.3);
+    }
+    /* 찜한 공고 전용 칩 (형광 연두 포인트) */
+    .chip.chip-bookmark {
+      border-color: #d9f99d;
+      color: #4d7c0f;
+      background: #f7fee7;
+    }
+    .chip.chip-bookmark.active {
+      background: linear-gradient(135deg, #65a30d, #a3e635);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 4px 16px rgba(132, 204, 22, 0.4);
+    }
+
+    /* ----- 결과 카운트 ----- */
+    .count {
+      max-width: 1200px;
+      margin: 24px auto 16px;
+      padding: 0 24px;
+      font-size: 0.95rem;
+      color: #666;
+    }
+    .count strong { color: #6a11cb; }
+
+    /* ----- 카드 그리드 ----- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+    }
+
+    /* ----- 카드 ----- */
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      cursor: pointer;
+      border: 1px solid #ececf2;
+      transition: all .25s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;   /* 하트 버튼 배치용 */
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(106, 17, 203, 0.15);
+      border-color: #d4b3ff;
+    }
+    .card .logo {
+      width: 56px; height: 56px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #f0f0f5;
+    }
+    .card .company-name { font-size: 1.1rem; font-weight: 700; color: #1a1a2e; }
+    .card .position-title { font-size: 0.98rem; color: #444; font-weight: 500; }
+    .card .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+    .card .tag {
+      font-size: 0.78rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #f3eeff;
+      color: #6a11cb;
+      font-weight: 500;
+    }
+
+    /* ----- 하트(찜) 버튼 ----- */
+    .bookmark-btn {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: #f7f7fb;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .15s, background .2s;
+      z-index: 2;
+    }
+    .bookmark-btn:hover { transform: scale(1.15); background: #fff0f5; }
+    .bookmark-btn.bookmarked { background: #ffe4ec; }
+    .bookmark-btn .heart { color: #cbd5e1; transition: color .2s; }
+    .bookmark-btn.bookmarked .heart { color: #ec4899; }
+
+    /* ----- 검색 결과 없음 ----- */
+    .no-result {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+    }
+
+    /* ----- 모달 ----- */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(20, 10, 40, 0.6);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center; justify-content: center;
+      z-index: 100; padding: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: #fff; border-radius: 20px;
+      max-width: 760px; width: 100%;
+      max-height: 90vh; overflow-y: auto;
+      position: relative;
+      animation: pop .25s ease-out;
+    }
+    @keyframes pop {
+      from { transform: scale(0.95); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .modal-header {
+      background: linear-gradient(135deg, #6a11cb 0%, #a855f7 100%);
+      color: #fff;
+      padding: 32px;
+      border-radius: 20px 20px 0 0;
+      position: relative;
+    }
+    .modal-header .top {
+      display: flex; align-items: center; gap: 16px; margin-bottom: 16px;
+    }
+    .modal-header img {
+      width: 64px; height: 64px;
+      border-radius: 14px;
+      background: #fff; object-fit: cover;
+    }
+    .modal-header h2 { font-size: 1.5rem; margin-bottom: 4px; }
+    .modal-header a { color: #ffd5ff; font-size: 0.9rem; text-decoration: none; }
+    .modal-header a:hover { text-decoration: underline; }
+    .modal-header .position { font-size: 1.3rem; font-weight: 700; margin-top: 12px; }
+
+    .close-btn {
+      position: absolute; top: 16px; right: 16px;
+      width: 38px; height: 38px; border-radius: 50%;
+      background: rgba(255,255,255,0.2); border: none;
+      color: #fff; font-size: 1.3rem; cursor: pointer;
+    }
+    .close-btn:hover { background: rgba(255,255,255,0.35); }
+
+    .modal-body { padding: 28px 32px 40px; }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px 20px;
+      background: #faf7ff;
+      padding: 18px 20px;
+      border-radius: 12px;
+      margin-bottom: 28px;
+    }
+    .info-grid div { font-size: 0.9rem; }
+    .info-grid .label {
+      color: #6a11cb;
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .section { margin-bottom: 28px; }
+    .section h3 {
+      font-size: 1.25rem; font-weight: 800; color: #1a1a2e;
+      padding-left: 14px;
+      border-left: 5px solid #6a11cb;
+      margin-bottom: 14px;
+    }
+    .section ul { list-style: none; padding-left: 0; }
+    .section li {
+      padding: 6px 0 6px 18px; position: relative; color: #333;
+    }
+    .section li::before {
+      content: "•"; position: absolute; left: 0;
+      color: #a855f7; font-weight: bold;
+    }
+    .section p { color: #333; margin-bottom: 6px; }
+    .section .sub-title {
+      font-weight: 600; color: #6a11cb;
+      margin-top: 12px; margin-bottom: 4px;
+    }
+
+        /* ----- 첨부파일 다운로드 버튼 ----- */
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f3eeff;
+      color: #6a11cb;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 28px; /* 아래 여백 */
+      transition: background .2s, transform .2s;
+    }
+    .download-btn:hover {
+      background: #e5d9f9;
+      transform: translateY(-2px);
+    }
+
+    /* ----- 반응형 ----- */
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.7rem; }
+      .info-grid { grid-template-columns: 1fr; }
+      .modal-header, .modal-body { padding: 24px; }
+
+      /* 모바일에서는 검색창/정렬을 위아래로 분리 */
+      .control-bar { flex-wrap: wrap; gap: 8px; }
+      .control-bar input {
+        flex: 1 1 100%;
+        padding: 14px 18px;
+        font-size: 0.95rem;
+      }
+      .control-bar select {
+        flex: 1 1 100%;
+        max-width: 100%;
+        padding: 12px 16px;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       [HTML 구조]
+       ============================================================ -->
+  <header>
+    <h1>🚀 NextRise 2026, Seoul 채용밋업 🚀</h1>
+    <p>80개 혁신 스타트업의 JD를 한눈에</p>
+  </header>
+
+  <!-- 검색창 + 정렬 드롭다운 -->
+  <div class="control-bar">
+    <input type="text" id="searchInput" placeholder="🔍 기업명 또는 직무로 검색해보세요" />
+    <select id="sortSelect">
+      <!-- JS가 옵션을 자동으로 채웁니다 -->
+    </select>
+  </div>
+
+  <!-- 필터 칩 영역 (JS가 자동으로 채움) -->
+  <div class="chip-wrap" id="chipWrap"></div>
+
+  <div class="count">총 <strong id="countNum">0</strong>개의 포지션이 열려있어요</div>
+
+  <main class="grid" id="cardGrid"></main>
+
+  <!-- 모달 -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modalBox">
+      <button class="close-btn" id="closeBtn" aria-label="닫기">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- 데이터 불러오기 -->
+  <script src="data.js"></script>
+
+  <!-- ============================================================
+       [JS 로직]
+       ============================================================ -->
+  <script>
+
+    /* ============================================================
+       ██████████████████████████████████████████████████████████
+       ██                                                      ██
+       ██   🎯 여기서 "필터 칩 종류"를 추가/삭제하세요!         ██
+       ██                                                      ██
+       ██████████████████████████████████████████████████████████
+       - label : 칩에 보여지는 글자
+       - value : data.js의 tags 배열에 들어있는 값과 일치해야 함
+       - 순서대로 화면에 나열됩니다.
+       - 항목을 삭제하려면 해당 { ... } 줄을 지우면 됩니다.
+       ============================================================ */
+    const filterOptions = [
+      { label: "프론트엔드",      value: "프론트엔드" },
+      { label: "백엔드",      value: "백엔드" },
+      { label: "인턴",       value: "인턴" },
+      { label: "계약직",     value: "계약직" },
+      { label: "정규직",     value: "정규직" },
+      { label: "원격 근무",       value: "원격 근무" },
+      { label: "서울",       value: "서울" },
+      { label: "경기",       value: "경기" },
+      { label: "강원",       value: "강원" },
+      { label: "충청", value: "충청" },
+      { label: "경상", value: "경상" },
+      { label: "전라", value: "전라" },
+      { label: "제주", value: "제주" }
+      // 👉 여기에 { label: "새칩", value: "태그값" } 추가하면 됩니다.
+    ];
+
+    /* ============================================================
+       ██████████████████████████████████████████████████████████
+       ██                                                      ██
+       ██   🎯 여기서 "정렬 기준"을 추가/수정하세요!            ██
+       ██                                                      ██
+       ██████████████████████████████████████████████████████████
+       - key   : <select>의 value 속성값 (내부 식별용, 영문 권장)
+       - label : 드롭다운에 보이는 글자
+       - sort  : 정렬 함수 (a, b를 비교해 음수/양수/0 반환)
+
+       [자주 쓰는 정렬 패턴]
+       · 한글 가나다순 : a.필드.localeCompare(b.필드, 'ko')
+       · 숫자 큰순     : b.숫자 - a.숫자
+       · 날짜 최신순   : new Date(b.날짜) - new Date(a.날짜)
+       ============================================================ */
+
+    const sortOptions = [
+      {
+        key: "companyName",
+        label: "기업명",
+        sort: (a, b) => a.companyName.localeCompare(b.companyName, 'ko')
+      },
+      {
+        key: "position",
+        label: "포지션",
+        sort: (a, b) => a.position.title.localeCompare(b.position.title, 'ko')
+      },
+      {
+        key: "employmentType",
+        label: "고용형태",
+        sort: (a, b) => a.employmentType.localeCompare(b.employmentType, 'ko')
+      },
+      {
+        key: "location",
+        label: "근무지",
+        sort: (a, b) => a.location.localeCompare(b.location, 'ko')
+      }
+    ];
+
+
+    /* ============================================================
+       [전역 상태 변수]
+       - 현재 사용자가 선택한 필터/검색/정렬 상태를 보관합니다.
+       ============================================================ */
+    const state = {
+      keyword: "",                // 검색어
+      activeTags: [],             // 선택된 필터 태그들 (다중 선택 가능)
+      showOnlyBookmarks: false,   // '내가 찜한 공고' 칩 활성 여부
+      sortKey: "companyName"      // ← 새 기본값 (기업명 가나다순)
+    };
+
+    /* ============================================================
+       [찜(북마크) 관리 - localStorage]
+       - 브라우저에 기업 id 목록을 저장/불러옴
+       ============================================================ */
+    const BOOKMARK_KEY = 'jobfair_bookmarks';   // localStorage 저장 키
+
+    function getBookmarks() {
+      // 저장된 값이 없으면 빈 배열 반환
+      const raw = localStorage.getItem(BOOKMARK_KEY);
+      return raw ? JSON.parse(raw) : [];
+    }
+    function saveBookmarks(ids) {
+      localStorage.setItem(BOOKMARK_KEY, JSON.stringify(ids));
+    }
+    function isBookmarked(id) {
+      return getBookmarks().includes(id);
+    }
+    function toggleBookmark(id) {
+      let list = getBookmarks();
+      if (list.includes(id)) {
+        list = list.filter(x => x !== id);   // 이미 있으면 제거
+      } else {
+        list.push(id);                        // 없으면 추가
+      }
+      saveBookmarks(list);
+    }
+
+    /* ============================================================
+       [DOM 요소]
+       ============================================================ */
+    const cardGrid     = document.getElementById('cardGrid');
+    const searchInput  = document.getElementById('searchInput');
+    const countNum     = document.getElementById('countNum');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalContent = document.getElementById('modalContent');
+    const closeBtn     = document.getElementById('closeBtn');
+    const chipWrap     = document.getElementById('chipWrap');
+    const sortSelect   = document.getElementById('sortSelect');
+
+
+    /* ============================================================
+       1) 필터 칩 렌더링
+       - filterOptions 배열과 '찜' 특별칩을 화면에 그림
+       ============================================================ */
+    function renderChips() {
+      chipWrap.innerHTML = '';
+
+      // (1) 찜한 공고 전용 칩 - 제일 앞에 배치
+      const bookmarkChip = document.createElement('div');
+      bookmarkChip.className = 'chip chip-bookmark' + (state.showOnlyBookmarks ? ' active' : '');
+      bookmarkChip.textContent = '⭐ 내가 찜한 공고';
+      bookmarkChip.addEventListener('click', () => {
+        state.showOnlyBookmarks = !state.showOnlyBookmarks;
+        renderChips();
+        applyAndRender();
+      });
+      chipWrap.appendChild(bookmarkChip);
+
+      // (2) 일반 태그 칩들
+      filterOptions.forEach(opt => {
+        const chip = document.createElement('div');
+        const isActive = state.activeTags.includes(opt.value);
+        chip.className = 'chip' + (isActive ? ' active' : '');
+        chip.textContent = opt.label;
+        chip.addEventListener('click', () => {
+          // 다중 선택: 이미 선택돼 있으면 제거, 아니면 추가
+          if (state.activeTags.includes(opt.value)) {
+            state.activeTags = state.activeTags.filter(t => t !== opt.value);
+          } else {
+            state.activeTags.push(opt.value);
+          }
+          renderChips();
+          applyAndRender();
+        });
+        chipWrap.appendChild(chip);
+      });
+    }
+
+    /* ============================================================
+       2) 정렬 드롭다운 렌더링
+       ============================================================ */
+    function renderSortSelect() {
+      sortSelect.innerHTML = '';
+      sortOptions.forEach(opt => {
+        const option = document.createElement('option');
+        option.value = opt.key;
+        option.textContent = opt.label;
+        sortSelect.appendChild(option);
+      });
+      sortSelect.value = state.sortKey;
+    }
+
+    /* ============================================================
+       3) 핵심! - 필터링 + 정렬 + 렌더링을 한 번에 처리
+       ============================================================ */
+    function applyAndRender() {
+      // (1) 원본 배열 복사
+      let list = [...companies];
+
+      // (2) 검색어 필터
+      if (state.keyword) {
+        const kw = state.keyword.toLowerCase();
+        list = list.filter(co =>
+          co.companyName.toLowerCase().includes(kw) ||
+          co.position.title.toLowerCase().includes(kw)
+        );
+      }
+
+      // (3) 태그 필터 (다중 선택은 OR 로직: 선택된 태그 중 하나라도 일치하면 통과)
+      //     ⚠️ AND 로직으로 바꾸려면 .some → .every 로 변경하세요.
+      if (state.activeTags.length > 0) {
+        list = list.filter(co =>
+          state.activeTags.some(tag => (co.tags || []).includes(tag))
+        );
+      }
+
+      // (4) 찜한 공고만 보기
+      if (state.showOnlyBookmarks) {
+        const bookmarks = getBookmarks();
+        list = list.filter(co => bookmarks.includes(co.id));
+      }
+
+      // (5) 정렬 - sortOptions에서 현재 key에 맞는 sort 함수 찾아 실행
+      const current = sortOptions.find(o => o.key === state.sortKey);
+      if (current) list.sort(current.sort);
+
+      // (6) 화면 그리기
+      renderCards(list);
+    }
+
+    /* ============================================================
+       4) 카드 렌더링
+       ============================================================ */
+    function renderCards(list) {
+      cardGrid.innerHTML = '';
+
+      if (list.length === 0) {
+        cardGrid.innerHTML = '<div class="no-result">😢 조건에 맞는 공고가 없어요.</div>';
+        countNum.textContent = 0;
+        return;
+      }
+
+      countNum.textContent = list.length;
+
+      list.forEach(co => {
+        const bookmarked = isBookmarked(co.id);
+
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <button class="bookmark-btn ${bookmarked ? 'bookmarked' : ''}"
+                  data-id="${co.id}" aria-label="찜하기">
+            <span class="heart">${bookmarked ? '♥' : '♡'}</span>
+          </button>
+          <img src="${co.logo}" alt="${co.companyName} 로고" class="logo"
+               onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2256%22 height=%2256%22><rect width=%2256%22 height=%2256%22 fill=%22%23f3eeff%22/><text x=%2228%22 y=%2234%22 text-anchor=%22middle%22 fill=%22%236a11cb%22 font-size=%2220%22 font-weight=%22bold%22>${co.companyName.charAt(0)}</text></svg>'">
+          <div class="company-name">${co.companyName}</div>
+          <div class="position-title">${co.position.title}</div>
+          <div class="tags">
+            <span class="tag">${co.employmentType}</span>
+            <span class="tag">📍 ${co.location}</span>
+          </div>
+        `;
+
+        // 카드 클릭 → 모달 열기
+        card.addEventListener('click', () => openModal(co));
+
+        // 하트 버튼 클릭 → 찜 토글 (이벤트 버블링 차단 중요!)
+        const btn = card.querySelector('.bookmark-btn');
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();           // 카드 클릭(모달 열기)으로 번지지 않게
+          toggleBookmark(co.id);
+          // 찜 해제 상태에서 "내가 찜한 공고" 탭을 보던 중이면 목록에서 빠지도록 다시 렌더
+          if (state.showOnlyBookmarks) {
+            applyAndRender();
+          } else {
+            // 아이콘 모양만 즉시 갱신
+            const nowBookmarked = isBookmarked(co.id);
+            btn.classList.toggle('bookmarked', nowBookmarked);
+            btn.querySelector('.heart').textContent = nowBookmarked ? '♥' : '♡';
+          }
+        });
+
+        cardGrid.appendChild(card);
+      });
+    }
+
+    /* ============================================================
+       5) 모달 열기
+       ============================================================ */
+    function openModal(co) {
+      const d = co.details;
+      const toList = arr => arr.map(item => `<li>${item}</li>`).join('');
+
+      modalContent.innerHTML = `
+        <div class="modal-header">
+          <div class="top">
+            <img src="${co.logo}" alt="${co.companyName}" onerror="this.style.display='none'">
+            <div>
+              <h2>${co.companyName}</h2>
+              <a href="${co.homepage}" target="_blank" rel="noopener">${co.homepage} ↗</a>
+            </div>
+          </div>
+          <div class="position">${co.position.title}</div>
+        </div>
+        <div class="modal-body">
+          <div class="info-grid">
+            <div><span class="label">고용 형태</span>${co.employmentType}</div>
+            <div><span class="label">근무지</span>${co.position.workplace}</div>
+            <div><span class="label">모집 인원</span>${co.position.headcount}</div>
+            <div><span class="label">입사 예정일</span>${co.position.startDate}</div>
+            <div><span class="label">소속 팀</span>${co.position.team}</div>
+            <div><span class="label">주요 자격요건</span>${co.position.requirements}</div>
+          </div>
+
+          ${co.attachment ? `<a href="${co.attachment}" download class="download-btn">📥 첨부파일 다운로드</a>` : ''}
+
+          <div class="section">
+            <h3>1. 우리가 어떤 회사인지 소개할게요</h3>
+            <div class="sub-title">🎯 해결하는 문제</div><p>${d.about.problem}</p>
+            <div class="sub-title">📈 성장 과정</div><p>${d.about.history}</p>
+            <div class="sub-title">🌟 비전</div><p>${d.about.vision}</p>
+          </div>
+
+          <div class="section">
+            <h3>2. 합류하면 이런 일을 하게 돼요</h3>
+            <ul>${toList(d.responsibilities)}</ul>
+          </div>
+
+          <div class="section">
+            <h3>3. 이런 분이면 잘 맞아요</h3>
+            <div class="sub-title">✅ 필수 요건</div>
+            <ul>${toList(d.qualifications.must)}</ul>
+            <div class="sub-title">💜 인재상</div>
+            <p>${d.qualifications.personality}</p>
+          </div>
+
+          <div class="section">
+            <h3>4. 여기서만 얻을 수 있는 성장 경험</h3>
+            <ul>${toList(d.growth)}</ul>
+          </div>
+
+          <div class="section">
+            <h3>5. 보상과 복지</h3>
+            <ul>${toList(d.benefits)}</ul>
+          </div>
+
+          <div class="section">
+            <h3>6. 이렇게 함께 하게 돼요</h3>
+            <ul>${toList(d.process)}</ul>
+          </div>
+        </div>
+      `;
+
+      modalOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modalOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    /* ============================================================
+       6) 이벤트 바인딩
+       ============================================================ */
+    closeBtn.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', e => {
+      if (e.target === modalOverlay) closeModal();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // 검색창 실시간 입력
+    searchInput.addEventListener('input', e => {
+      state.keyword = e.target.value.trim();
+      applyAndRender();
+    });
+
+    // 정렬 드롭다운 변경
+    sortSelect.addEventListener('change', e => {
+      state.sortKey = e.target.value;
+      applyAndRender();
+    });
+
+    /* ============================================================
+       7) 초기 실행
+       ============================================================ */
+    renderChips();
+    renderSortSelect();
+    applyAndRender();
+  </script>
+</body>
+</html>
