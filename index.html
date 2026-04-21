@@ -20,7 +20,7 @@
     }
 
     /* ============================================================
-       [상단 헤더] - 애플 이벤트 스타일 (미니멀 & 집중형)
+       [상단 헤더] - 애플 이벤트 스타일 (컴팩트 다이어트)
        ============================================================ */
     header {
       background:
@@ -28,8 +28,8 @@
         radial-gradient(ellipse at 80% 100%, rgba(106, 17, 203, 0.5) 0%, transparent 55%),
         linear-gradient(135deg, #2a0759 0%, #4c0ba8 40%, #6a11cb 75%, #8e2de2 100%);
       color: #fff;
-      padding: 110px 24px 130px;
-      text-align: center;             /* ← 모든 텍스트 중앙 정렬 */
+      padding: 60px 24px 80px;        /* ← 110/130 → 60/80 으로 축소 */
+      text-align: center;
       position: relative;
       overflow: hidden;
     }
@@ -60,7 +60,7 @@
       pointer-events: none;
     }
 
-    /* 떠다니는 기하 도형들 (더 은은하게) */
+    /* 떠다니는 기하 도형들 (헤더가 작아진 만큼 위치/크기 살짝 조정) */
     .deco-shape {
       position: absolute;
       pointer-events: none;
@@ -68,29 +68,29 @@
       animation: floatY 9s ease-in-out infinite;
     }
     .deco-shape.s1 {
-      top: 30px; left: 8%;
-      width: 90px; height: 90px;
+      top: 18px; left: 8%;
+      width: 70px; height: 70px;
       border: 2px solid #fff; border-radius: 50%;
       animation-delay: 0s;
     }
     .deco-shape.s2 {
-      top: 70px; right: 10%;
-      width: 60px; height: 60px;
+      top: 40px; right: 10%;
+      width: 50px; height: 50px;
       border: 2px solid #ffd5ff; border-radius: 14px;
       transform: rotate(20deg);
       animation-delay: 1.5s;
     }
     .deco-shape.s3 {
-      bottom: 50px; left: 12%;
-      width: 40px; height: 40px;
+      bottom: 28px; left: 12%;
+      width: 34px; height: 34px;
       background: rgba(255, 213, 255, 0.35);
       border-radius: 8px;
       transform: rotate(45deg);
       animation-delay: 3s;
     }
     .deco-shape.s4 {
-      bottom: 70px; right: 6%;
-      width: 110px; height: 110px;
+      bottom: 36px; right: 6%;
+      width: 80px; height: 80px;
       border: 2px dashed #fff; border-radius: 50%;
       animation-delay: 2s;
     }
@@ -106,8 +106,8 @@
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      align-items: center;            /* ← 중앙 정렬 강화 */
-      gap: 22px;
+      align-items: center;
+      gap: 12px;                      /* ← 22px → 12px 로 축소 */
     }
 
     /* (1) Shape the Next - 반투명 글래스 알약 뱃지 */
@@ -126,12 +126,12 @@
     .slogan-pill {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.78rem;
+      gap: 7px;
+      font-size: 0.72rem;             /* ← 0.78 → 0.72 */
       font-weight: 600;
-      letter-spacing: 5px;
+      letter-spacing: 4px;            /* ← 5 → 4 */
       color: #fff;
-      padding: 8px 20px;
+      padding: 6px 16px;              /* ← 8/20 → 6/16 */
       border-radius: 999px;
       background: rgba(255,255,255,0.08);
       backdrop-filter: blur(10px);
@@ -141,18 +141,19 @@
       animation: pillGlow 3.5s ease-in-out infinite;
     }
     .slogan-pill .dot {
-      width: 6px; height: 6px;
+      width: 5px; height: 5px;
       border-radius: 50%;
       background: #ffd5ff;
       box-shadow: 0 0 8px #ffd5ff;
     }
 
-    /* (2) 메인 타이틀 - 가장 크고 두꺼운 그라데이션 텍스트 */
+    /* (2) 메인 타이틀 - 밀도 있게 */
     .main-title {
-      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      font-size: clamp(2rem, 5vw, 3.6rem);   /* ← 살짝 작게 */
       font-weight: 900;
-      letter-spacing: -2px;
-      line-height: 1.05;
+      letter-spacing: -1.5px;
+      line-height: 1.15;                       /* ← 1.05 → 1.0 (위아래 여백 최소화) */
+      margin: 0;                              /* ← 불필요한 여백 제거 */
       background: linear-gradient(
         180deg,
         #ffffff 0%,
@@ -172,15 +173,15 @@
       -webkit-text-fill-color: transparent;
     }
 
-    /* (3) 일시/장소 - 얇은 폰트 */
+    /* (3) 일시/장소 - 살짝 작게 */
     .event-info {
-      font-size: 1.05rem;
+      font-size: 0.95rem;             /* ← 1.05 → 0.95 */
       font-weight: 300;
       color: rgba(255,255,255,0.85);
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
       display: inline-flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -200,7 +201,7 @@
        ============================================================ */
     .control-bar {
       max-width: 1000px;
-      margin: -32px auto 0;          /* 헤더와 본문에 반쯤 걸치게 */
+      margin: -28px auto 0;          /* ← 헤더 축소에 맞춰 -32 → -28 */
       padding: 0 16px;
       display: flex;
       gap: 10px;
@@ -633,18 +634,18 @@
     }
     .download-btn:hover { background: #e5d9f9; transform: translateY(-2px); }
 
-    /* ----- 반응형 ----- */
+    /* ----- 반응형 - 모바일에서도 헤더 다이어트 ----- */
     @media (max-width: 600px) {
-      header { padding: 80px 20px 110px; }
-      .deco-shape.s1 { width: 50px; height: 50px; }
-      .deco-shape.s4 { width: 70px; height: 70px; }
-      .slogan-pill { font-size: 0.7rem; letter-spacing: 4px; padding: 6px 16px; }
-      .event-info { font-size: 0.95rem; gap: 10px; }
+      header { padding: 44px 20px 64px; }     /* ← 80/110 → 44/64 */
+      .deco-shape.s1 { width: 44px; height: 44px; }
+      .deco-shape.s4 { width: 56px; height: 56px; }
+      .slogan-pill { font-size: 0.66rem; letter-spacing: 3px; padding: 5px 14px; }
+      .event-info { font-size: 0.88rem; gap: 8px; }
 
       .info-grid { grid-template-columns: 1fr; }
       .modal-header, .modal-body { padding: 24px; }
 
-      .control-bar { flex-wrap: wrap; gap: 8px; margin-top: -28px; }
+      .control-bar { flex-wrap: wrap; gap: 8px; margin-top: -24px; }  /* ← -28 → -24 */
       .control-bar input {
         flex: 1 1 100%; padding: 14px 18px; font-size: 0.95rem;
       }
