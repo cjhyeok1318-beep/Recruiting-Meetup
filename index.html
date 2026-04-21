@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>스타트업 채용 박람회 | Job Directory</title>
+  <title>NextRise 2026, Seoul 채용밋업</title>
 
   <!-- ============================================================
        [CSS 스타일]
@@ -19,79 +19,313 @@
       min-height: 100vh;
     }
 
-    /* ----- 상단 헤더 ----- */
+    /* ============================================================
+       [상단 헤더] - 애플 이벤트 스타일 (미니멀 & 집중형)
+       ============================================================ */
     header {
-      background: linear-gradient(135deg, #6a11cb 0%, #8e2de2 50%, #a855f7 100%);
+      background:
+        radial-gradient(ellipse at 20% 0%, rgba(168, 85, 247, 0.45) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 100%, rgba(106, 17, 203, 0.5) 0%, transparent 55%),
+        linear-gradient(135deg, #2a0759 0%, #4c0ba8 40%, #6a11cb 75%, #8e2de2 100%);
       color: #fff;
-      padding: 60px 24px 80px;
-      text-align: center;
+      padding: 110px 24px 130px;
+      text-align: center;             /* ← 모든 텍스트 중앙 정렬 */
       position: relative;
       overflow: hidden;
     }
+    /* 도트 패턴 */
     header::before {
       content: "";
       position: absolute;
       top: -50%; left: -50%;
       width: 200%; height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
-      background-size: 30px 30px;
+      background:
+        radial-gradient(circle, rgba(255,255,255,0.08) 1.2px, transparent 1.2px);
+      background-size: 32px 32px;
       pointer-events: none;
     }
-    header h1 {
-      font-size: 2.4rem; font-weight: 800;
-      letter-spacing: -1px; margin-bottom: 8px;
-      position: relative;
+    /* 사선 라인 패턴 */
+    header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          135deg,
+          rgba(255,255,255,0.035) 0,
+          rgba(255,255,255,0.035) 1px,
+          transparent 1px,
+          transparent 24px
+        );
+      pointer-events: none;
     }
-    header p { font-size: 1.05rem; opacity: 0.9; position: relative; }
 
-    /* ----- 검색+정렬 바 ----- */
+    /* 떠다니는 기하 도형들 (더 은은하게) */
+    .deco-shape {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.13;
+      animation: floatY 9s ease-in-out infinite;
+    }
+    .deco-shape.s1 {
+      top: 30px; left: 8%;
+      width: 90px; height: 90px;
+      border: 2px solid #fff; border-radius: 50%;
+      animation-delay: 0s;
+    }
+    .deco-shape.s2 {
+      top: 70px; right: 10%;
+      width: 60px; height: 60px;
+      border: 2px solid #ffd5ff; border-radius: 14px;
+      transform: rotate(20deg);
+      animation-delay: 1.5s;
+    }
+    .deco-shape.s3 {
+      bottom: 50px; left: 12%;
+      width: 40px; height: 40px;
+      background: rgba(255, 213, 255, 0.35);
+      border-radius: 8px;
+      transform: rotate(45deg);
+      animation-delay: 3s;
+    }
+    .deco-shape.s4 {
+      bottom: 70px; right: 6%;
+      width: 110px; height: 110px;
+      border: 2px dashed #fff; border-radius: 50%;
+      animation-delay: 2s;
+    }
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+      50%      { transform: translateY(-14px) rotate(var(--r, 0deg)); }
+    }
+
+    .header-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;            /* ← 중앙 정렬 강화 */
+      gap: 22px;
+    }
+
+    /* (1) Shape the Next - 반투명 글래스 알약 뱃지 */
+    @keyframes pillGlow {
+      0%, 100% {
+        box-shadow:
+          0 0 0 1px rgba(255,255,255,0.15) inset,
+          0 0 18px rgba(255, 213, 255, 0.35);
+      }
+      50% {
+        box-shadow:
+          0 0 0 1px rgba(255,255,255,0.25) inset,
+          0 0 32px rgba(255, 213, 255, 0.65);
+      }
+    }
+    .slogan-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 5px;
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.18);
+      text-transform: uppercase;
+      animation: pillGlow 3.5s ease-in-out infinite;
+    }
+    .slogan-pill .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #ffd5ff;
+      box-shadow: 0 0 8px #ffd5ff;
+    }
+
+    /* (2) 메인 타이틀 - 가장 크고 두꺼운 그라데이션 텍스트 */
+    .main-title {
+      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      font-weight: 900;
+      letter-spacing: -2px;
+      line-height: 1.05;
+      background: linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #f3e8ff 40%,
+        #ffd5ff 70%,
+        #ffffff 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 4px 24px rgba(255, 213, 255, 0.25));
+    }
+    .main-title .accent {
+      background: linear-gradient(90deg, #ffd5ff 0%, #ffffff 50%, #ffd5ff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* (3) 일시/장소 - 얇은 폰트 */
+    .event-info {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .event-info .sep {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      display: inline-block;
+    }
+    .event-info strong {
+      font-weight: 500;
+      color: #fff;
+    }
+
+    /* ============================================================
+       [검색+정렬 바] - 헤더에 오버랩 + 입체감
+       ============================================================ */
     .control-bar {
       max-width: 1000px;
-      margin: -32px auto 0;
+      margin: -32px auto 0;          /* 헤더와 본문에 반쯤 걸치게 */
       padding: 0 16px;
       display: flex;
       gap: 10px;
       position: relative;
-      z-index: 10;
+      z-index: 20;
       align-items: center;
-      flex-wrap: nowrap;              /* 같은 줄에 유지 */
+      flex-wrap: nowrap;
+    }
+    .control-bar input,
+    .control-bar .sort-dropdown .sort-btn {
+      box-shadow:
+        0 22px 50px rgba(42, 7, 89, 0.30),
+        0 8px 18px rgba(76, 11, 168, 0.18),
+        0 1px 2px rgba(0, 0, 0, 0.04);
     }
     .control-bar input {
-      flex: 1 1 auto;                 /* 남는 공간만큼만 늘어남 */
-      min-width: 0;                   /* 과도한 확장 방지 (핵심!) */
-      padding: 16px 22px;
+      flex: 1 1 auto;
+      min-width: 0;
+      padding: 17px 22px;
       font-size: 1rem;
       border: none;
       border-radius: 999px;
-      box-shadow: 0 10px 40px rgba(106, 17, 203, 0.25);
       outline: none;
-      transition: box-shadow .2s;
-    }
-    .control-bar select {
-      flex: 0 0 auto;                 /* 고정 크기 유지 */
-      padding: 16px 18px;
-      font-size: 0.95rem;
-      border: none;
-      border-radius: 999px;
       background: #fff;
-      cursor: pointer;
-      box-shadow: 0 10px 40px rgba(106, 17, 203, 0.25);
-      font-family: inherit;
-      font-weight: 500;
-      color: #1a1a2e;
-      outline: none;
-      max-width: 40%;                 /* 화면 좁을 때 select도 너무 커지지 않게 */
+      transition: box-shadow .2s, transform .2s;
+    }
+    .control-bar input:focus {
+      box-shadow:
+        0 22px 50px rgba(42, 7, 89, 0.36),
+        0 8px 18px rgba(76, 11, 168, 0.22),
+        0 0 0 3px rgba(168, 85, 247, 0.25);
     }
 
-    /* ----- 필터 칩 영역 ----- */
-    .chip-wrap {
+    /* ----- 커스텀 정렬 드롭다운 ----- */
+    .sort-dropdown { position: relative; flex: 0 0 auto; }
+    .sort-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 17px 22px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      background: #fff;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: inherit;
+      outline: none;
+      transition: transform .15s, box-shadow .2s;
+      white-space: nowrap;
+    }
+    .sort-btn:hover { transform: translateY(-1px); }
+    .sort-btn .sort-label-prefix { color: #888; font-weight: 500; }
+    .sort-btn .sort-label-value  { color: #6a11cb; font-weight: 700; }
+    .sort-btn .caret {
+      font-size: 0.7rem; color: #a855f7;
+      transition: transform .25s ease;
+      margin-left: 2px;
+    }
+    .sort-dropdown.open .sort-btn .caret { transform: rotate(180deg); }
+
+    .sort-popup {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      min-width: 200px;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow:
+        0 20px 50px rgba(76, 11, 168, 0.25),
+        0 4px 12px rgba(0, 0, 0, 0.06);
+      list-style: none;
+      padding: 8px;
+      margin: 0;
+      z-index: 30;
+      opacity: 0;
+      transform: translateY(-8px) scale(0.97);
+      pointer-events: none;
+      transition: opacity .2s ease, transform .2s ease;
+      transform-origin: top right;
+    }
+    .sort-dropdown.open .sort-popup {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+    .sort-popup li {
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-size: 0.93rem;
+      color: #333;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: background .15s, color .15s;
+      user-select: none;
+    }
+    .sort-popup li:hover { background: #f3eeff; color: #6a11cb; }
+    .sort-popup li.selected {
+      color: #6a11cb; font-weight: 700; background: #faf5ff;
+    }
+    .sort-popup li .check {
+      color: #a855f7; font-weight: 700; visibility: hidden;
+    }
+    .sort-popup li.selected .check { visibility: visible; }
+
+    /* ----- 메인 필터 영역 ----- */
+    .filter-bar {
       max-width: 1200px;
-      margin: 28px auto 0;
+      margin: 24px auto 0;
       padding: 0 24px;
       display: flex;
       flex-wrap: wrap;
+      align-items: center;
       gap: 8px;
     }
+    .filter-divider {
+      width: 1px; height: 22px;
+      background: #e5e0f0; margin: 0 4px;
+    }
+
+    /* ----- 칩 공통 ----- */
     .chip {
       padding: 8px 16px;
       border-radius: 999px;
@@ -105,28 +339,66 @@
       user-select: none;
       white-space: nowrap;
     }
-    .chip:hover {
-      border-color: #a855f7;
-      color: #6a11cb;
-    }
+    .chip:hover { border-color: #a855f7; color: #6a11cb; }
     .chip.active {
       background: linear-gradient(135deg, #6a11cb, #a855f7);
-      color: #fff;
-      border-color: transparent;
+      color: #fff; border-color: transparent;
       box-shadow: 0 4px 16px rgba(106, 17, 203, 0.3);
     }
-    /* 찜한 공고 전용 칩 (형광 연두 포인트) */
     .chip.chip-bookmark {
-      border-color: #d9f99d;
-      color: #4d7c0f;
-      background: #f7fee7;
+      border-color: #d9f99d; color: #4d7c0f; background: #f7fee7;
     }
     .chip.chip-bookmark.active {
       background: linear-gradient(135deg, #65a30d, #a3e635);
-      color: #fff;
-      border-color: transparent;
+      color: #fff; border-color: transparent;
       box-shadow: 0 4px 16px rgba(132, 204, 22, 0.4);
     }
+
+    /* ----- 상세 필터 버튼 ----- */
+    .advanced-btn {
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1.5px dashed #a855f7;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #6a11cb;
+      cursor: pointer;
+      transition: all .2s ease;
+      white-space: nowrap;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .advanced-btn:hover { background: #f3eeff; transform: translateY(-1px); }
+    .advanced-btn .badge {
+      background: #6a11cb; color: #fff;
+      font-size: 0.72rem; font-weight: 700;
+      padding: 1px 7px; border-radius: 999px;
+      min-width: 18px; text-align: center;
+    }
+
+    /* ----- 선택된 상세 태그 Pill ----- */
+    .active-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 6px 6px 12px;
+      border-radius: 999px;
+      background: #f3eeff;
+      color: #6a11cb;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid #d4b3ff;
+    }
+    .active-tag button {
+      background: rgba(106, 17, 203, 0.15);
+      border: none; width: 20px; height: 20px;
+      border-radius: 50%; cursor: pointer;
+      color: #6a11cb; font-size: 0.75rem; font-weight: 700;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: background .15s; line-height: 1;
+    }
+    .active-tag button:hover { background: #6a11cb; color: #fff; }
 
     /* ----- 결과 카운트 ----- */
     .count {
@@ -148,18 +420,23 @@
       padding: 0 24px;
     }
 
-    /* ----- 카드 ----- */
+    @keyframes cardFadeIn {
+      from { opacity: 0; transform: translateY(16px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
     .card {
       background: #fff;
       border-radius: 16px;
       padding: 24px;
       cursor: pointer;
       border: 1px solid #ececf2;
-      transition: all .25s ease;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
       display: flex;
       flex-direction: column;
       gap: 14px;
-      position: relative;   /* 하트 버튼 배치용 */
+      position: relative;
+      opacity: 0;
+      animation: cardFadeIn .45s ease-out forwards;
     }
     .card:hover {
       transform: translateY(-4px);
@@ -168,50 +445,75 @@
     }
     .card .logo {
       width: 56px; height: 56px;
-      border-radius: 12px;
-      object-fit: cover;
+      border-radius: 12px; object-fit: cover;
       background: #f0f0f5;
     }
     .card .company-name { font-size: 1.1rem; font-weight: 700; color: #1a1a2e; }
     .card .position-title { font-size: 0.98rem; color: #444; font-weight: 500; }
     .card .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
     .card .tag {
-      font-size: 0.78rem;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: #f3eeff;
-      color: #6a11cb;
-      font-weight: 500;
+      font-size: 0.78rem; padding: 4px 10px;
+      border-radius: 999px; background: #f3eeff;
+      color: #6a11cb; font-weight: 500;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .card, .deco-shape, .slogan-pill { animation: none !important; opacity: 1 !important; }
     }
 
     /* ----- 하트(찜) 버튼 ----- */
     .bookmark-btn {
-      position: absolute;
-      top: 14px; right: 14px;
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: #f7f7fb;
-      border: none;
-      cursor: pointer;
-      font-size: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform .15s, background .2s;
-      z-index: 2;
+      position: absolute; top: 14px; right: 14px;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: #f7f7fb; border: none; cursor: pointer;
+      font-size: 1.2rem; display: flex;
+      align-items: center; justify-content: center;
+      transition: transform .15s, background .2s; z-index: 2;
     }
     .bookmark-btn:hover { transform: scale(1.15); background: #fff0f5; }
     .bookmark-btn.bookmarked { background: #ffe4ec; }
     .bookmark-btn .heart { color: #cbd5e1; transition: color .2s; }
     .bookmark-btn.bookmarked .heart { color: #ec4899; }
 
-    /* ----- 검색 결과 없음 ----- */
+    /* ----- Empty State ----- */
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to   { opacity: 1; transform: scale(1); }
+    }
     .no-result {
       grid-column: 1 / -1;
       text-align: center;
-      padding: 60px 20px;
-      color: #999;
+      padding: 70px 20px 80px;
+      color: #666;
+      animation: popIn .35s ease-out;
     }
+    .no-result .empty-emoji {
+      font-size: 4.5rem; margin-bottom: 16px;
+      display: inline-block; filter: grayscale(0.2);
+    }
+    .no-result h3 {
+      font-size: 1.35rem; font-weight: 800;
+      color: #1a1a2e; margin-bottom: 8px;
+    }
+    .no-result p {
+      font-size: 0.98rem; color: #888; margin-bottom: 28px;
+    }
+    .reset-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px;
+      font-size: 0.98rem; font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #6a11cb, #a855f7);
+      border: none; border-radius: 999px;
+      cursor: pointer; font-family: inherit;
+      box-shadow: 0 8px 24px rgba(106, 17, 203, 0.35);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .reset-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(106, 17, 203, 0.45);
+    }
+    .reset-btn:active { transform: translateY(0); }
 
     /* ----- 모달 ----- */
     .modal-overlay {
@@ -253,6 +555,7 @@
     .modal-header a { color: #ffd5ff; font-size: 0.9rem; text-decoration: none; }
     .modal-header a:hover { text-decoration: underline; }
     .modal-header .position { font-size: 1.3rem; font-weight: 700; margin-top: 12px; }
+    .modal-header p.subtitle { font-size: 0.95rem; opacity: 0.9; margin-top: 4px; }
 
     .close-btn {
       position: absolute; top: 16px; right: 16px;
@@ -264,35 +567,52 @@
 
     .modal-body { padding: 28px 32px 40px; }
 
+    .filter-modal { max-width: 560px; }
+    .filter-section { margin-bottom: 24px; }
+    .filter-section h3 {
+      font-size: 1.05rem; font-weight: 800; color: #1a1a2e;
+      padding-left: 12px; border-left: 4px solid #6a11cb;
+      margin-bottom: 14px;
+    }
+    .filter-section .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .filter-modal-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 12px; padding-top: 8px;
+      border-top: 1px solid #ececf2; margin-top: 8px;
+    }
+    .filter-modal-footer .btn {
+      padding: 12px 24px; border-radius: 10px; border: none;
+      font-size: 0.95rem; font-weight: 700; cursor: pointer;
+      font-family: inherit; transition: all .2s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #6a11cb, #a855f7);
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(106, 17, 203, 0.3);
+    }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-ghost { background: #f7f7fb; color: #6a11cb; }
+    .btn-ghost:hover { background: #f3eeff; }
+
     .info-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px 20px;
-      background: #faf7ff;
-      padding: 18px 20px;
-      border-radius: 12px;
-      margin-bottom: 28px;
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 12px 20px; background: #faf7ff;
+      padding: 18px 20px; border-radius: 12px; margin-bottom: 28px;
     }
     .info-grid div { font-size: 0.9rem; }
     .info-grid .label {
-      color: #6a11cb;
-      font-size: 0.9rem;
-      font-weight: 700;
-      display: block;
-      margin-bottom: 4px;
+      color: #6a11cb; font-size: 0.9rem; font-weight: 700;
+      display: block; margin-bottom: 4px;
     }
 
     .section { margin-bottom: 28px; }
     .section h3 {
       font-size: 1.25rem; font-weight: 800; color: #1a1a2e;
-      padding-left: 14px;
-      border-left: 5px solid #6a11cb;
+      padding-left: 14px; border-left: 5px solid #6a11cb;
       margin-bottom: 14px;
     }
     .section ul { list-style: none; padding-left: 0; }
-    .section li {
-      padding: 6px 0 6px 18px; position: relative; color: #333;
-    }
+    .section li { padding: 6px 0 6px 18px; position: relative; color: #333; }
     .section li::before {
       content: "•"; position: absolute; left: 0;
       color: #a855f7; font-weight: bold;
@@ -303,45 +623,35 @@
       margin-top: 12px; margin-bottom: 4px;
     }
 
-        /* ----- 첨부파일 다운로드 버튼 ----- */
     .download-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #f3eeff;
-      color: #6a11cb;
-      padding: 12px 20px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.95rem;
-      margin-bottom: 28px; /* 아래 여백 */
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #f3eeff; color: #6a11cb;
+      padding: 12px 20px; border-radius: 8px;
+      text-decoration: none; font-weight: 700; font-size: 0.95rem;
+      margin-bottom: 28px;
       transition: background .2s, transform .2s;
     }
-    .download-btn:hover {
-      background: #e5d9f9;
-      transform: translateY(-2px);
-    }
+    .download-btn:hover { background: #e5d9f9; transform: translateY(-2px); }
 
     /* ----- 반응형 ----- */
     @media (max-width: 600px) {
-      header h1 { font-size: 1.7rem; }
+      header { padding: 80px 20px 110px; }
+      .deco-shape.s1 { width: 50px; height: 50px; }
+      .deco-shape.s4 { width: 70px; height: 70px; }
+      .slogan-pill { font-size: 0.7rem; letter-spacing: 4px; padding: 6px 16px; }
+      .event-info { font-size: 0.95rem; gap: 10px; }
+
       .info-grid { grid-template-columns: 1fr; }
       .modal-header, .modal-body { padding: 24px; }
 
-      /* 모바일에서는 검색창/정렬을 위아래로 분리 */
-      .control-bar { flex-wrap: wrap; gap: 8px; }
+      .control-bar { flex-wrap: wrap; gap: 8px; margin-top: -28px; }
       .control-bar input {
-        flex: 1 1 100%;
-        padding: 14px 18px;
-        font-size: 0.95rem;
+        flex: 1 1 100%; padding: 14px 18px; font-size: 0.95rem;
       }
-      .control-bar select {
-        flex: 1 1 100%;
-        max-width: 100%;
-        padding: 12px 16px;
-      }
-
+      .sort-dropdown { flex: 1 1 100%; }
+      .sort-btn { width: 100%; justify-content: center; padding: 13px 18px; }
+      .sort-popup { right: auto; left: 0; width: 100%; transform-origin: top center; }
+      .filter-divider { display: none; }
     }
   </style>
 </head>
@@ -352,26 +662,56 @@
        [HTML 구조]
        ============================================================ -->
   <header>
-    <h1>🚀 NextRise 2026, Seoul 채용밋업 🚀</h1>
-    <p>80개 혁신 스타트업의 JD를 한눈에</p>
+    <div class="deco-shape s1"></div>
+    <div class="deco-shape s2"></div>
+    <div class="deco-shape s3"></div>
+    <div class="deco-shape s4"></div>
+
+    <div class="header-inner">
+      <!-- (1) Shape the Next 알약 뱃지 -->
+      <div class="slogan-pill">
+        <span class="dot"></span>
+        Shape the Next
+      </div>
+
+      <!-- (2) 메인 타이틀 -->
+      <h1 class="main-title">
+        NextRise 2026, Seoul<br>
+        <span class="accent">채용밋업</span>
+      </h1>
+
+      <!-- (3) 일시 / 장소 -->
+      <div class="event-info">
+        <span>📅 <strong>2026. 6. 18 ~ 19</strong></span>
+        <span class="sep"></span>
+        <span>📍 <strong>삼성동 COEX</strong></span>
+      </div>
+    </div>
   </header>
 
-  <!-- 검색창 + 정렬 드롭다운 -->
+  <!-- 검색창 + 커스텀 정렬 드롭다운 (헤더에 오버랩) -->
   <div class="control-bar">
     <input type="text" id="searchInput" placeholder="🔍 기업명 또는 직무로 검색해보세요" />
-    <select id="sortSelect">
-      <!-- JS가 옵션을 자동으로 채웁니다 -->
-    </select>
+
+    <div class="sort-dropdown" id="sortDropdown">
+      <button type="button" class="sort-btn" id="sortBtn" aria-haspopup="listbox" aria-expanded="false">
+        <span>↕️</span>
+        <span class="sort-label-prefix">정렬:</span>
+        <span class="sort-label-value" id="sortBtnLabel">기업명</span>
+        <span class="caret">▼</span>
+      </button>
+      <ul class="sort-popup" id="sortPopup" role="listbox"></ul>
+    </div>
   </div>
 
-  <!-- 필터 칩 영역 (JS가 자동으로 채움) -->
-  <div class="chip-wrap" id="chipWrap"></div>
+  <!-- 메인 필터 영역 -->
+  <div class="filter-bar" id="filterBar"></div>
 
   <div class="count">총 <strong id="countNum">0</strong>개의 포지션이 열려있어요</div>
 
   <main class="grid" id="cardGrid"></main>
 
-  <!-- 모달 -->
+  <!-- 기업 상세 모달 -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal" id="modalBox">
       <button class="close-btn" id="closeBtn" aria-label="닫기">✕</button>
@@ -379,7 +719,25 @@
     </div>
   </div>
 
-  <!-- 데이터 불러오기 -->
+  <!-- 상세 필터 모달 -->
+  <div class="modal-overlay" id="filterModalOverlay">
+    <div class="modal filter-modal">
+      <button class="close-btn" id="filterCloseBtn" aria-label="닫기">✕</button>
+      <div class="modal-header">
+        <h2>🎛️ 상세 필터</h2>
+        <p class="subtitle">원하는 조건을 선택하면 즉시 결과에 반영돼요</p>
+      </div>
+      <div class="modal-body">
+        <div id="advancedFilterArea"></div>
+        <div class="filter-modal-footer">
+          <button class="btn btn-ghost" id="resetAdvancedBtn">전체 해제</button>
+          <button class="btn btn-primary" id="filterDoneBtn">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 데이터 -->
   <script src="data.js"></script>
 
   <!-- ============================================================
@@ -387,185 +745,286 @@
        ============================================================ -->
   <script>
 
-    /* ============================================================
-       ██████████████████████████████████████████████████████████
-       ██                                                      ██
-       ██   🎯 여기서 "필터 칩 종류"를 추가/삭제하세요!         ██
-       ██                                                      ██
-       ██████████████████████████████████████████████████████████
-       - label : 칩에 보여지는 글자
-       - value : data.js의 tags 배열에 들어있는 값과 일치해야 함
-       - 순서대로 화면에 나열됩니다.
-       - 항목을 삭제하려면 해당 { ... } 줄을 지우면 됩니다.
-       ============================================================ */
+    /* 🎯 필터 정의 */
     const filterOptions = [
-      { label: "프론트엔드",      value: "프론트엔드" },
-      { label: "백엔드",      value: "백엔드" },
-      { label: "인턴",       value: "인턴" },
-      { label: "계약직",     value: "계약직" },
-      { label: "정규직",     value: "정규직" },
-      { label: "원격 근무",       value: "원격 근무" },
-      { label: "서울",       value: "서울" },
-      { label: "경기",       value: "경기" },
-      { label: "강원",       value: "강원" },
-      { label: "충청", value: "충청" },
-      { label: "경상", value: "경상" },
-      { label: "전라", value: "전라" },
-      { label: "제주", value: "제주" }
-      // 👉 여기에 { label: "새칩", value: "태그값" } 추가하면 됩니다.
-    ];
-
-    /* ============================================================
-       ██████████████████████████████████████████████████████████
-       ██                                                      ██
-       ██   🎯 여기서 "정렬 기준"을 추가/수정하세요!            ██
-       ██                                                      ██
-       ██████████████████████████████████████████████████████████
-       - key   : <select>의 value 속성값 (내부 식별용, 영문 권장)
-       - label : 드롭다운에 보이는 글자
-       - sort  : 정렬 함수 (a, b를 비교해 음수/양수/0 반환)
-
-       [자주 쓰는 정렬 패턴]
-       · 한글 가나다순 : a.필드.localeCompare(b.필드, 'ko')
-       · 숫자 큰순     : b.숫자 - a.숫자
-       · 날짜 최신순   : new Date(b.날짜) - new Date(a.날짜)
-       ============================================================ */
-
-    const sortOptions = [
       {
-        key: "companyName",
-        label: "기업명",
-        sort: (a, b) => a.companyName.localeCompare(b.companyName, 'ko')
+        categoryKey: "position",
+        category: "포지션",
+        placement: "main",
+        options: [
+          { label: "프론트엔드", value: "프론트엔드" },
+          { label: "백엔드",     value: "백엔드" }
+        ]
       },
       {
-        key: "position",
-        label: "포지션",
-        sort: (a, b) => a.position.title.localeCompare(b.position.title, 'ko')
+        categoryKey: "employment",
+        category: "고용 형태",
+        placement: "advanced",
+        options: [
+          { label: "인턴",   value: "인턴" },
+          { label: "계약직", value: "계약직" },
+          { label: "정규직", value: "정규직" }
+        ]
       },
       {
-        key: "employmentType",
-        label: "고용형태",
-        sort: (a, b) => a.employmentType.localeCompare(b.employmentType, 'ko')
-      },
-      {
-        key: "location",
-        label: "근무지",
-        sort: (a, b) => a.location.localeCompare(b.location, 'ko')
+        categoryKey: "location",
+        category: "근무지",
+        placement: "advanced",
+        options: [
+          { label: "원격 근무", value: "원격 근무" },
+          { label: "서울",     value: "서울" },
+          { label: "경기",     value: "경기" },
+          { label: "강원",     value: "강원" },
+          { label: "충청",     value: "충청" },
+          { label: "경상",     value: "경상" },
+          { label: "전라",     value: "전라" },
+          { label: "제주",     value: "제주" }
+        ]
       }
     ];
 
+    /* 정렬 옵션 */
+    const sortOptions = [
+      { key: "companyName",    label: "기업명",   sort: (a,b) => a.companyName.localeCompare(b.companyName, 'ko') },
+      { key: "position",       label: "포지션",   sort: (a,b) => a.position.title.localeCompare(b.position.title, 'ko') },
+      { key: "employmentType", label: "고용형태", sort: (a,b) => a.employmentType.localeCompare(b.employmentType, 'ko') },
+      { key: "location",       label: "근무지",   sort: (a,b) => a.location.localeCompare(b.location, 'ko') }
+    ];
 
-    /* ============================================================
-       [전역 상태 변수]
-       - 현재 사용자가 선택한 필터/검색/정렬 상태를 보관합니다.
-       ============================================================ */
+    /* 상태 */
     const state = {
-      keyword: "",                // 검색어
-      activeTags: [],             // 선택된 필터 태그들 (다중 선택 가능)
-      showOnlyBookmarks: false,   // '내가 찜한 공고' 칩 활성 여부
-      sortKey: "companyName"      // ← 새 기본값 (기업명 가나다순)
+      keyword: "",
+      activeTags: (() => {
+        const obj = {};
+        filterOptions.forEach(g => { obj[g.categoryKey] = []; });
+        return obj;
+      })(),
+      showOnlyBookmarks: false,
+      sortKey: "companyName"
     };
 
-    /* ============================================================
-       [찜(북마크) 관리 - localStorage]
-       - 브라우저에 기업 id 목록을 저장/불러옴
-       ============================================================ */
-    const BOOKMARK_KEY = 'jobfair_bookmarks';   // localStorage 저장 키
-
+    /* 찜 */
+    const BOOKMARK_KEY = 'jobfair_bookmarks';
     function getBookmarks() {
-      // 저장된 값이 없으면 빈 배열 반환
       const raw = localStorage.getItem(BOOKMARK_KEY);
       return raw ? JSON.parse(raw) : [];
     }
-    function saveBookmarks(ids) {
-      localStorage.setItem(BOOKMARK_KEY, JSON.stringify(ids));
-    }
-    function isBookmarked(id) {
-      return getBookmarks().includes(id);
-    }
+    function saveBookmarks(ids) { localStorage.setItem(BOOKMARK_KEY, JSON.stringify(ids)); }
+    function isBookmarked(id) { return getBookmarks().includes(id); }
     function toggleBookmark(id) {
       let list = getBookmarks();
-      if (list.includes(id)) {
-        list = list.filter(x => x !== id);   // 이미 있으면 제거
-      } else {
-        list.push(id);                        // 없으면 추가
-      }
+      if (list.includes(id)) list = list.filter(x => x !== id);
+      else list.push(id);
       saveBookmarks(list);
     }
 
     /* ============================================================
-       [DOM 요소]
+       🆕 첨부파일 유효성 체크
+       - undefined / null / 빈 문자열 / 공백만 있는 문자열 모두 false
        ============================================================ */
-    const cardGrid     = document.getElementById('cardGrid');
-    const searchInput  = document.getElementById('searchInput');
-    const countNum     = document.getElementById('countNum');
-    const modalOverlay = document.getElementById('modalOverlay');
-    const modalContent = document.getElementById('modalContent');
-    const closeBtn     = document.getElementById('closeBtn');
-    const chipWrap     = document.getElementById('chipWrap');
-    const sortSelect   = document.getElementById('sortSelect');
+    function hasAttachment(co) {
+      return typeof co.attachment === 'string' && co.attachment.trim() !== '';
+    }
+
+    /* DOM */
+    const cardGrid           = document.getElementById('cardGrid');
+    const searchInput        = document.getElementById('searchInput');
+    const countNum           = document.getElementById('countNum');
+    const modalOverlay       = document.getElementById('modalOverlay');
+    const modalContent       = document.getElementById('modalContent');
+    const closeBtn           = document.getElementById('closeBtn');
+    const filterBar          = document.getElementById('filterBar');
+    const filterModalOverlay = document.getElementById('filterModalOverlay');
+    const filterCloseBtn     = document.getElementById('filterCloseBtn');
+    const filterDoneBtn      = document.getElementById('filterDoneBtn');
+    const resetAdvancedBtn   = document.getElementById('resetAdvancedBtn');
+    const advancedFilterArea = document.getElementById('advancedFilterArea');
+
+    const sortDropdown = document.getElementById('sortDropdown');
+    const sortBtn      = document.getElementById('sortBtn');
+    const sortBtnLabel = document.getElementById('sortBtnLabel');
+    const sortPopup    = document.getElementById('sortPopup');
 
 
     /* ============================================================
-       1) 필터 칩 렌더링
-       - filterOptions 배열과 '찜' 특별칩을 화면에 그림
+       1) 메인 필터 바
        ============================================================ */
-    function renderChips() {
-      chipWrap.innerHTML = '';
+    function renderFilterBar() {
+      filterBar.innerHTML = '';
 
-      // (1) 찜한 공고 전용 칩 - 제일 앞에 배치
       const bookmarkChip = document.createElement('div');
       bookmarkChip.className = 'chip chip-bookmark' + (state.showOnlyBookmarks ? ' active' : '');
       bookmarkChip.textContent = '⭐ 내가 찜한 공고';
       bookmarkChip.addEventListener('click', () => {
         state.showOnlyBookmarks = !state.showOnlyBookmarks;
-        renderChips();
+        renderFilterBar();
         applyAndRender();
       });
-      chipWrap.appendChild(bookmarkChip);
+      filterBar.appendChild(bookmarkChip);
 
-      // (2) 일반 태그 칩들
-      filterOptions.forEach(opt => {
-        const chip = document.createElement('div');
-        const isActive = state.activeTags.includes(opt.value);
-        chip.className = 'chip' + (isActive ? ' active' : '');
-        chip.textContent = opt.label;
-        chip.addEventListener('click', () => {
-          // 다중 선택: 이미 선택돼 있으면 제거, 아니면 추가
-          if (state.activeTags.includes(opt.value)) {
-            state.activeTags = state.activeTags.filter(t => t !== opt.value);
-          } else {
-            state.activeTags.push(opt.value);
-          }
-          renderChips();
+      const divider1 = document.createElement('span');
+      divider1.className = 'filter-divider';
+      filterBar.appendChild(divider1);
+
+      filterOptions
+        .filter(group => group.placement === 'main')
+        .forEach(group => {
+          group.options.forEach(opt => {
+            const isActive = state.activeTags[group.categoryKey].includes(opt.value);
+            const chip = document.createElement('div');
+            chip.className = 'chip' + (isActive ? ' active' : '');
+            chip.textContent = opt.label;
+            chip.addEventListener('click', () => {
+              toggleTag(group.categoryKey, opt.value);
+              renderFilterBar();
+              applyAndRender();
+            });
+            filterBar.appendChild(chip);
+          });
+        });
+
+      const divider2 = document.createElement('span');
+      divider2.className = 'filter-divider';
+      filterBar.appendChild(divider2);
+
+      const advancedCount = filterOptions
+        .filter(g => g.placement === 'advanced')
+        .reduce((sum, g) => sum + state.activeTags[g.categoryKey].length, 0);
+
+      const advBtn = document.createElement('button');
+      advBtn.className = 'advanced-btn';
+      advBtn.innerHTML = `🎛️ 상세 필터${advancedCount > 0 ? `<span class="badge">${advancedCount}</span>` : ''}`;
+      advBtn.addEventListener('click', openFilterModal);
+      filterBar.appendChild(advBtn);
+
+      filterOptions
+        .filter(g => g.placement === 'advanced')
+        .forEach(group => {
+          state.activeTags[group.categoryKey].forEach(value => {
+            const pill = document.createElement('span');
+            pill.className = 'active-tag';
+            pill.innerHTML = `${value} <button aria-label="${value} 해제" title="해제">✕</button>`;
+            pill.querySelector('button').addEventListener('click', () => {
+              toggleTag(group.categoryKey, value);
+              renderFilterBar();
+              renderAdvancedChips();
+              applyAndRender();
+            });
+            filterBar.appendChild(pill);
+          });
+        });
+    }
+
+    function toggleTag(categoryKey, value) {
+      const arr = state.activeTags[categoryKey];
+      const idx = arr.indexOf(value);
+      if (idx > -1) arr.splice(idx, 1);
+      else arr.push(value);
+    }
+
+    /* ============================================================
+       2) 상세 필터 모달
+       ============================================================ */
+    function renderAdvancedChips() {
+      advancedFilterArea.innerHTML = '';
+      filterOptions
+        .filter(g => g.placement === 'advanced')
+        .forEach(group => {
+          const section = document.createElement('div');
+          section.className = 'filter-section';
+
+          const h3 = document.createElement('h3');
+          h3.textContent = group.category;
+          section.appendChild(h3);
+
+          const row = document.createElement('div');
+          row.className = 'chip-row';
+
+          group.options.forEach(opt => {
+            const isActive = state.activeTags[group.categoryKey].includes(opt.value);
+            const chip = document.createElement('div');
+            chip.className = 'chip' + (isActive ? ' active' : '');
+            chip.textContent = opt.label;
+            chip.addEventListener('click', () => {
+              toggleTag(group.categoryKey, opt.value);
+              renderAdvancedChips();
+              renderFilterBar();
+              applyAndRender();
+            });
+            row.appendChild(chip);
+          });
+
+          section.appendChild(row);
+          advancedFilterArea.appendChild(section);
+        });
+    }
+
+    function openFilterModal() {
+      renderAdvancedChips();
+      filterModalOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      closeSortDropdown();
+    }
+    function closeFilterModal() {
+      filterModalOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    /* ============================================================
+       3) 커스텀 정렬 드롭다운
+       ============================================================ */
+    function renderSortPopup() {
+      sortPopup.innerHTML = '';
+      sortOptions.forEach(opt => {
+        const li = document.createElement('li');
+        li.setAttribute('role', 'option');
+        li.dataset.key = opt.key;
+        if (opt.key === state.sortKey) li.classList.add('selected');
+        li.innerHTML = `<span>${opt.label}</span><span class="check">✓</span>`;
+        li.addEventListener('click', () => {
+          state.sortKey = opt.key;
+          updateSortBtnLabel();
+          renderSortPopup();
+          closeSortDropdown();
           applyAndRender();
         });
-        chipWrap.appendChild(chip);
+        sortPopup.appendChild(li);
       });
     }
 
-    /* ============================================================
-       2) 정렬 드롭다운 렌더링
-       ============================================================ */
-    function renderSortSelect() {
-      sortSelect.innerHTML = '';
-      sortOptions.forEach(opt => {
-        const option = document.createElement('option');
-        option.value = opt.key;
-        option.textContent = opt.label;
-        sortSelect.appendChild(option);
-      });
-      sortSelect.value = state.sortKey;
+    function updateSortBtnLabel() {
+      const current = sortOptions.find(o => o.key === state.sortKey);
+      sortBtnLabel.textContent = current ? current.label : '';
     }
 
+    function openSortDropdown() {
+      sortDropdown.classList.add('open');
+      sortBtn.setAttribute('aria-expanded', 'true');
+    }
+    function closeSortDropdown() {
+      sortDropdown.classList.remove('open');
+      sortBtn.setAttribute('aria-expanded', 'false');
+    }
+    function toggleSortDropdown() {
+      if (sortDropdown.classList.contains('open')) closeSortDropdown();
+      else openSortDropdown();
+    }
+
+    sortBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleSortDropdown();
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!sortDropdown.contains(e.target)) closeSortDropdown();
+    });
+
     /* ============================================================
-       3) 핵심! - 필터링 + 정렬 + 렌더링을 한 번에 처리
+       4) 필터링 + 정렬 + 렌더링
        ============================================================ */
     function applyAndRender() {
-      // (1) 원본 배열 복사
       let list = [...companies];
 
-      // (2) 검색어 필터
       if (state.keyword) {
         const kw = state.keyword.toLowerCase();
         list = list.filter(co =>
@@ -574,47 +1033,68 @@
         );
       }
 
-      // (3) 태그 필터 (다중 선택은 OR 로직: 선택된 태그 중 하나라도 일치하면 통과)
-      //     ⚠️ AND 로직으로 바꾸려면 .some → .every 로 변경하세요.
-      if (state.activeTags.length > 0) {
-        list = list.filter(co =>
-          state.activeTags.some(tag => (co.tags || []).includes(tag))
-        );
-      }
+      list = list.filter(co => {
+        const coTags = co.tags || [];
+        return filterOptions.every(group => {
+          const selected = state.activeTags[group.categoryKey];
+          if (!selected || selected.length === 0) return true;
+          return selected.some(tag => coTags.includes(tag));
+        });
+      });
 
-      // (4) 찜한 공고만 보기
       if (state.showOnlyBookmarks) {
         const bookmarks = getBookmarks();
         list = list.filter(co => bookmarks.includes(co.id));
       }
 
-      // (5) 정렬 - sortOptions에서 현재 key에 맞는 sort 함수 찾아 실행
       const current = sortOptions.find(o => o.key === state.sortKey);
       if (current) list.sort(current.sort);
 
-      // (6) 화면 그리기
       renderCards(list);
     }
 
+    function resetAllFilters() {
+      state.keyword = "";
+      state.showOnlyBookmarks = false;
+      filterOptions.forEach(g => { state.activeTags[g.categoryKey] = []; });
+      searchInput.value = "";
+
+      renderFilterBar();
+      renderAdvancedChips();
+      applyAndRender();
+    }
+
     /* ============================================================
-       4) 카드 렌더링
+       5) 카드 렌더링
        ============================================================ */
     function renderCards(list) {
       cardGrid.innerHTML = '';
 
       if (list.length === 0) {
-        cardGrid.innerHTML = '<div class="no-result">😢 조건에 맞는 공고가 없어요.</div>';
+        const empty = document.createElement('div');
+        empty.className = 'no-result';
+        empty.innerHTML = `
+          <div class="empty-emoji">🔍</div>
+          <h3>😢 조건에 맞는 공고가 없어요.</h3>
+          <p>검색어를 줄이거나, 선택한 필터를 해제해 보세요.</p>
+          <button type="button" class="reset-btn" id="resetAllBtn">
+            🔄 필터 초기화하고 전체 보기
+          </button>
+        `;
+        cardGrid.appendChild(empty);
         countNum.textContent = 0;
+        document.getElementById('resetAllBtn').addEventListener('click', resetAllFilters);
         return;
       }
 
       countNum.textContent = list.length;
 
-      list.forEach(co => {
+      list.forEach((co, idx) => {
         const bookmarked = isBookmarked(co.id);
-
         const card = document.createElement('div');
         card.className = 'card';
+        card.style.animationDelay = `${Math.min(idx * 40, 400)}ms`;
+
         card.innerHTML = `
           <button class="bookmark-btn ${bookmarked ? 'bookmarked' : ''}"
                   data-id="${co.id}" aria-label="찜하기">
@@ -629,23 +1109,18 @@
             <span class="tag">📍 ${co.location}</span>
           </div>
         `;
-
-        // 카드 클릭 → 모달 열기
         card.addEventListener('click', () => openModal(co));
 
-        // 하트 버튼 클릭 → 찜 토글 (이벤트 버블링 차단 중요!)
         const btn = card.querySelector('.bookmark-btn');
         btn.addEventListener('click', (e) => {
-          e.stopPropagation();           // 카드 클릭(모달 열기)으로 번지지 않게
+          e.stopPropagation();
           toggleBookmark(co.id);
-          // 찜 해제 상태에서 "내가 찜한 공고" 탭을 보던 중이면 목록에서 빠지도록 다시 렌더
           if (state.showOnlyBookmarks) {
             applyAndRender();
           } else {
-            // 아이콘 모양만 즉시 갱신
-            const nowBookmarked = isBookmarked(co.id);
-            btn.classList.toggle('bookmarked', nowBookmarked);
-            btn.querySelector('.heart').textContent = nowBookmarked ? '♥' : '♡';
+            const now = isBookmarked(co.id);
+            btn.classList.toggle('bookmarked', now);
+            btn.querySelector('.heart').textContent = now ? '♥' : '♡';
           }
         });
 
@@ -654,11 +1129,17 @@
     }
 
     /* ============================================================
-       5) 모달 열기
+       6) 기업 상세 모달
+          🆕 첨부파일은 hasAttachment(co)가 true일 때만 렌더
        ============================================================ */
     function openModal(co) {
       const d = co.details;
       const toList = arr => arr.map(item => `<li>${item}</li>`).join('');
+
+      // 첨부파일 버튼: 유효한 파일 경로가 있을 때만 HTML 생성
+      const attachmentHTML = hasAttachment(co)
+        ? `<a href="${co.attachment}" download class="download-btn">📥 첨부파일 다운로드</a>`
+        : '';
 
       modalContent.innerHTML = `
         <div class="modal-header">
@@ -681,7 +1162,7 @@
             <div><span class="label">주요 자격요건</span>${co.position.requirements}</div>
           </div>
 
-          ${co.attachment ? `<a href="${co.attachment}" download class="download-btn">📥 첨부파일 다운로드</a>` : ''}
+          ${attachmentHTML}
 
           <div class="section">
             <h3>1. 우리가 어떤 회사인지 소개할게요</h3>
@@ -689,12 +1170,10 @@
             <div class="sub-title">📈 성장 과정</div><p>${d.about.history}</p>
             <div class="sub-title">🌟 비전</div><p>${d.about.vision}</p>
           </div>
-
           <div class="section">
             <h3>2. 합류하면 이런 일을 하게 돼요</h3>
             <ul>${toList(d.responsibilities)}</ul>
           </div>
-
           <div class="section">
             <h3>3. 이런 분이면 잘 맞아요</h3>
             <div class="sub-title">✅ 필수 요건</div>
@@ -702,17 +1181,14 @@
             <div class="sub-title">💜 인재상</div>
             <p>${d.qualifications.personality}</p>
           </div>
-
           <div class="section">
             <h3>4. 여기서만 얻을 수 있는 성장 경험</h3>
             <ul>${toList(d.growth)}</ul>
           </div>
-
           <div class="section">
             <h3>5. 보상과 복지</h3>
             <ul>${toList(d.benefits)}</ul>
           </div>
-
           <div class="section">
             <h3>6. 이렇게 함께 하게 돼요</h3>
             <ul>${toList(d.process)}</ul>
@@ -722,41 +1198,54 @@
 
       modalOverlay.classList.add('active');
       document.body.style.overflow = 'hidden';
+      closeSortDropdown();
     }
-
     function closeModal() {
       modalOverlay.classList.remove('active');
       document.body.style.overflow = '';
     }
 
     /* ============================================================
-       6) 이벤트 바인딩
+       7) 이벤트 바인딩
        ============================================================ */
     closeBtn.addEventListener('click', closeModal);
     modalOverlay.addEventListener('click', e => {
       if (e.target === modalOverlay) closeModal();
     });
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeModal();
+
+    filterCloseBtn.addEventListener('click', closeFilterModal);
+    filterDoneBtn.addEventListener('click', closeFilterModal);
+    filterModalOverlay.addEventListener('click', e => {
+      if (e.target === filterModalOverlay) closeFilterModal();
+    });
+    resetAdvancedBtn.addEventListener('click', () => {
+      filterOptions
+        .filter(g => g.placement === 'advanced')
+        .forEach(g => { state.activeTags[g.categoryKey] = []; });
+      renderAdvancedChips();
+      renderFilterBar();
+      applyAndRender();
     });
 
-    // 검색창 실시간 입력
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        if (sortDropdown.classList.contains('open')) closeSortDropdown();
+        if (filterModalOverlay.classList.contains('active')) closeFilterModal();
+        if (modalOverlay.classList.contains('active')) closeModal();
+      }
+    });
+
     searchInput.addEventListener('input', e => {
       state.keyword = e.target.value.trim();
       applyAndRender();
     });
 
-    // 정렬 드롭다운 변경
-    sortSelect.addEventListener('change', e => {
-      state.sortKey = e.target.value;
-      applyAndRender();
-    });
-
     /* ============================================================
-       7) 초기 실행
+       8) 초기 실행
        ============================================================ */
-    renderChips();
-    renderSortSelect();
+    renderFilterBar();
+    renderSortPopup();
+    updateSortBtnLabel();
     applyAndRender();
   </script>
 </body>
